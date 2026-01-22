@@ -1,0 +1,6 @@
+@OcDotnetTemplate_HostAddress = http://localhost:5051
+
+GET {{OcDotnetTemplate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
