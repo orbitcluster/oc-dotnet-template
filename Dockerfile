@@ -11,7 +11,7 @@ COPY src/webApp/ ./webApp/
 WORKDIR /src/webApp
 RUN dotnet publish -c Release -o /app/publish --no-restore
 
-# Runtime stage 1
+# Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
