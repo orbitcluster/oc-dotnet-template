@@ -44,5 +44,13 @@ namespace OcDotnetTemplate.Controllers
                 return Ok(BitConverter.ToString(hash));
             }
         }
+        [HttpGet("bug")]
+        public IActionResult Bug()
+        {
+            var s = "Hello";
+            // Bug: Return value of pure method is ignored
+            s.ToUpper(); 
+            return Ok(s);
+        }
     }
 }
