@@ -3,7 +3,9 @@ name: app-ci
 
 on:
   push:
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 permissions:
@@ -18,10 +20,9 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: orbitcluster/oc-cicd-dotnet-workflow@feat/intialize_workflow
+      - uses: orbitcluster/oc-cicd-dotnet-workflow@v1
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
           test-project-path: "test"
-          sonar-password: ${{ secrets.SONAR_PASSWORD }}
 
