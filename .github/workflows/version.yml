@@ -17,4 +17,3 @@ jobs:
         with:
           dry-run: ${{ github.ref_name != 'main' }}
           github-token: ${{ github.token }}
-

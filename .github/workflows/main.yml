@@ -25,4 +25,3 @@ jobs:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
           test-project-path: "test"
-
