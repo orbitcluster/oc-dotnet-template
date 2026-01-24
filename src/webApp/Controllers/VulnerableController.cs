@@ -1,66 +1,48 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace OcDotnetTemplate.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class VulnerableController : ControllerBase
+namespace OcDotnetTemplate.Controllers
 {
-    private readonly ILogger<VulnerableController> _logger;
-
-    public VulnerableController(ILogger<VulnerableController> logger)
+    [ApiController]
+    [Route("[controller]")]
+    public class VulnerableController : ControllerBase
     {
-        _logger = logger;
-    }
+        private readonly ILogger<WeatherForecastController> _logger;
 
-    // VULNERABILITY 1: SQL Injection - User input directly concatenated into SQL query
-    [HttpGet("user/{userId}")]
-    public IActionResult GetUser(string userId)
-    {
-        // This is vulnerable to SQL injection!
-        string query = "SELECT * FROM Users WHERE Id = '" + userId + "'";
-        _logger.LogInformation("Executing query: " + query);
-        
-        // Simulated - no actual DB connection
-        return Ok(new { Query = query, Message = "This endpoint has SQL injection vulnerability" });
-    }
-
-    // VULNERABILITY 2: Hardcoded credentials
-    [HttpGet("connect")]
-    public IActionResult ConnectToDatabase()
-    {
-        // Hardcoded credentials - security vulnerability!
-        string username = "admin";
-        string password = "SuperSecret123!";
-        string connectionString = $"Server=myserver;Database=mydb;User={username};Password={password}";
-        
-        return Ok(new { ConnectionString = connectionString });
-    }
-
-    // VULNERABILITY 3: Path Traversal
-    [HttpGet("file")]
-    public IActionResult GetFile([FromQuery] string filename)
-    {
-        // Path traversal vulnerability - user can access files outside intended directory
-        string path = Path.Combine("/var/app/files", filename);
-        
-        if (System.IO.File.Exists(path))
+        public VulnerableController(ILogger<WeatherForecastController> logger)
         {
-            return Ok(new { Path = path });
+            _logger = logger;
         }
-        return NotFound();
-    }
 
-    // VULNERABILITY 4: Weak cryptography
-    [HttpGet("hash")]
-    public IActionResult HashPassword([FromQuery] string password)
-    {
-        // Using weak MD5 hash algorithm
-        using var md5 = System.Security.Cryptography.MD5.Create();
-        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(password);
-        byte[] hashBytes = md5.ComputeHash(inputBytes);
-        
-        return Ok(new { Hash = Convert.ToHexString(hashBytes) });
+        [HttpGet("insecure-logging")]
+        public IActionResult InsecureLogging(string userInput)
+        {
+            // Vulnerability: Log Injection / Neutralization of CRLF
+            _logger.LogInformation("User input: " + userInput);
+            return Ok("Logged");
+        }
+
+        [HttpGet("hardcoded-password")]
+        public IActionResult HardcodedPassword()
+        {
+            // Vulnerability: Hardcoded Credential
+            var password = "superSecretHardcodedPassword123!";
+            if (password == "admin") {
+                return Ok("Access Granted");
+            }
+            return Unauthorized();
+        }
+
+        [HttpGet("weak-hashing")]
+        public IActionResult WeakHashing(string input)
+        {
+            // Vulnerability: Weak Cryptographic Algorithm (MD5)
+            using (var md5 = MD5.Create())
+            {
+                var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return Ok(BitConverter.ToString(hash));
+            }
+        }
     }
 }
