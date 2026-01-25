@@ -32,4 +32,4 @@ jobs:
         with:
           language: "csharp"
           build-mode: "manual"
-          build-command: "dotnet clean src/webApp && dotnet build src/webApp --configuration Release"
+          build-command: "dotnet clean src/webApp && dotnet build src/webApp --configuration Release -p:UseSharedCompilation=false"
