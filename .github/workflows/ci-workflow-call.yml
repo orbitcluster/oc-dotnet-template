@@ -24,7 +24,7 @@ jobs:
       app-name: "oc-dotnet-test"
       appid: "1"
       orgid: "101"
-      buid: "1002"
+      buid: "1001"
       solution-path: "src/webApp"
       dotnet-version: "8.0.x"
       sonar-source-path: "src/webApp"
