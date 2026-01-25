@@ -15,6 +15,7 @@ permissions:
   pull-requests: write
   id-token: write
   packages: write
+  security-events: write
 
 jobs:
   build-deploy:
@@ -31,4 +32,4 @@ jobs:
         with:
           language: "csharp"
           build-mode: "manual"
-          build-command: "dotnet build src/webApp --configuration Release"
+          build-command: "dotnet clean src/webApp && dotnet build src/webApp --configuration Release"
