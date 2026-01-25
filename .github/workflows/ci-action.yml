@@ -1,11 +1,11 @@
 ---
-name: app-ci
+name: app-action-ci
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -24,4 +24,4 @@ jobs:
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
-          test-project-path: "test"
+          test-directory: "test"

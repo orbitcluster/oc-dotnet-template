@@ -1,0 +1,30 @@
+---
+name: app-workflow-ci
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  packages: write
+  security-events: write
+
+jobs:
+  build-deploy:
+    uses: orbitcluster/oc-cicd-dotnet-workflow/.github/workflows/all-ci.yml@v1
+    with:
+      test-directory: "test"
+      app-name: "oc-dotnet-test"
+      appid: "1"
+      orgid: "101"
+      buid: "1001"
+      solution-path: "src/webApp"
+      dotnet-version: "8.0.x"
+      sonar-source-path: "src/webApp"
