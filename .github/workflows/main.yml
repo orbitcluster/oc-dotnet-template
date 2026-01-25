@@ -32,4 +32,4 @@ jobs:
         with:
           language: "csharp"
           build-mode: "manual"
-          build-command: "rm -rf src/webApp/bin src/webApp/obj && dotnet build src/webApp --configuration Release --no-incremental -p:UseSharedCompilation=false"
+          build-command: "dotnet build src/webApp --configuration Release -p:UseSharedCompilation=false"
