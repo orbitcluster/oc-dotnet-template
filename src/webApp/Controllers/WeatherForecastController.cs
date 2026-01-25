@@ -32,10 +32,23 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("vulnerable")]
     public IEnumerable<WeatherForecast> GetVulnerable(string user_input)
     {
-        // INTENTIONAL VULNERABILITY FOR SAST TESTING: CWE-89 (SQL Injection)
-        // CodeQL will detect this string concatenation into a query.
-        string query = "SELECT * FROM Weather WHERE City = '" + user_input + "'";
-        Console.WriteLine("Executing query: " + query); 
+        // INTENTIONAL VULNERABILITY: CWE-89
+        // We must use a Real SQL Sink for CodeQL to flag it.
+        // Console.WriteLine is safe. SqlCommand.ExecuteReader is not.
+        using (var connection = new System.Data.SqlClient.SqlConnection("Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
+        {
+            connection.Open();
+            // BAD: Concatenation
+            string query = "SELECT * FROM Weather WHERE City = '" + user_input + "'";
+            using (var command = new System.Data.SqlClient.SqlCommand(query, connection))
+            {
+                // This is the SINK
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read()) { /* ... */ }
+                }
+            }
+        }
 
         return Enumerable.Range(1, 1).Select(index => new WeatherForecast
         {
