@@ -5,7 +5,7 @@ A boilerplate template for ASP.NET Core 8.0 Web API applications, designed for e
 ## Features
 
 - **.NET 8.0**: Built on the latest LTS version of .NET.
-- **Dockerized**: Includes a multi-stage Dockerfile for optimized images.
+- **Dockerized**: Include a multi-stage Dockerfile for optimized images.
 - **Security-First**: Runs as a non-root user in the Docker container.
 - **Dev-Ready**: Includes `docker-compose.yml` for local development.
 - **CI/CD Integration**: Pre-configured GitHub Actions for CI (`app-workflow-ci`) and reusable workflows.
