@@ -29,4 +29,20 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+    [HttpGet("vulnerable")]
+    public IEnumerable<WeatherForecast> GetVulnerable(string user_input)
+    {
+        // INTENTIONAL VULNERABILITY FOR SAST TESTING: CWE-89 (SQL Injection)
+        // CodeQL will detect this string concatenation into a query.
+        string query = "SELECT * FROM Weather WHERE City = '" + user_input + "'";
+        Console.WriteLine("Executing query: " + query); 
+
+        return Enumerable.Range(1, 1).Select(index => new WeatherForecast
+        {
+            Date = DateOnly.FromDateTime(DateTime.Now),
+            TemperatureC = 25,
+            Summary = "Vulnerable"
+        })
+        .ToArray();
+    }
 }
