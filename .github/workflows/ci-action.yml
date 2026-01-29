@@ -1,11 +1,10 @@
----
 name: app-action-ci
 
 on:
   push:
-    branches: ["main"]
+    branches: ['**']
   pull_request:
-    branches: ["main"]
+    branches: ['**']
   workflow_dispatch:
 
 permissions:
@@ -15,13 +14,19 @@ permissions:
   pull-requests: write
   id-token: write
   packages: write
+  security-events: write # Added for scans
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: orbitcluster/oc-cicd-dotnet-workflow@v1
+      - uses: orbitcluster/oc-cicd-dotnet-workflow@fix/update_docker_logic
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
           test-directory: "test"
+          app-name: "oc-dotnet-template"
+          appid: "0"
+          orgid: "0"
+          buid: "0"
+          role-to-assume: ${{ secrets.OC_ROLE_TO_ASSUME }}
