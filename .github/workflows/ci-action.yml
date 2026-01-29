@@ -20,7 +20,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: orbitcluster/oc-cicd-dotnet-workflow@fix/update_docker_logic
+      - uses: orbitcluster/oc-cicd-dotnet-workflow@v1
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"

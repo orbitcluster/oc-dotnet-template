@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   build-deploy:
-    uses: orbitcluster/oc-cicd-dotnet-workflow/.github/workflows/all-ci.yml@fix/update_docker_logic
+    uses: orbitcluster/oc-cicd-dotnet-workflow/.github/workflows/all-ci.yml@v1
     with:
       test-directory: "test"
       app-name: "oc-dotnet-test"
