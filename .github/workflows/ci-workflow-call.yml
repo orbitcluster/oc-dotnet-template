@@ -3,6 +3,7 @@ name: app-workflow-ci
 
 on:
   push:
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -28,3 +29,5 @@ jobs:
       solution-path: "src/webApp"
       dotnet-version: "8.0.x"
       sonar-source-path: "src/webApp"
+    secrets:
+      role-to-assume: ${{ secrets.OC_ROLE_TO_ASSUME }}

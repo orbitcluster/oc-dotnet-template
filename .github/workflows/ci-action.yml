@@ -1,11 +1,10 @@
----
 name: app-action-ci
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -15,6 +14,7 @@ permissions:
   pull-requests: write
   id-token: write
   packages: write
+  security-events: write # Added for scans
 
 jobs:
   build-deploy:
@@ -24,4 +24,10 @@ jobs:
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
+          sonar-source-path: "src/webApp"
           test-directory: "test"
+          app-name: "oc-dotnet-template"
+          appid: "0"
+          orgid: "0"
+          buid: "0"
+          role-to-assume: ${{ secrets.OC_ROLE_TO_ASSUME }}
