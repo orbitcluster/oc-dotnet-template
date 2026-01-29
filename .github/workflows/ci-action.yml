@@ -2,9 +2,9 @@ name: app-action-ci
 
 on:
   push:
-    branches: ['**']
+    branches: ['main']
   pull_request:
-    branches: ['**']
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
