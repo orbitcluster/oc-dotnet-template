@@ -24,6 +24,7 @@ jobs:
         with:
           dotnet-version: "8.0.x"
           solution-path: "src/webApp"
+          sonar-source-path: "src/webApp"
           test-directory: "test"
           app-name: "oc-dotnet-template"
           appid: "0"
